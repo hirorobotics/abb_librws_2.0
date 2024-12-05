@@ -319,7 +319,8 @@ const std::string Resources::RW_PANEL_CTRLSTATE               = Services::RW + "
 const std::string Resources::RW_PANEL_OPMODE                  = Services::RW + "/panel/opmode";
 const std::string Resources::RW_RAPID_EXECUTION               = Services::RW + "/rapid/execution";
 const std::string Resources::RW_RAPID_MODULES                 = Services::RW + "/rapid/modules";
-const std::string Resources::RW_RAPID_SYMBOL                  = Services::RW + "/rapid/symbol/RAPID";
+const std::string Resources::RW_RAPID_SYMBOL_DATA_RAPID       = Services::RW + "/rapid/symbol/RAPID";
+const std::string Resources::RW_RAPID_SYMBOL_PROPERTIES_RAPID = Services::RW + "/rapid/symbol/RAPID";
 const std::string Resources::RW_RAPID_TASKS                   = Services::RW + "/rapid/tasks";
 const std::string Resources::RW_SYSTEM                        = Services::RW + "/system";
 

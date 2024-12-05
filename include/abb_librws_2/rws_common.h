@@ -44,7 +44,7 @@
 #include "Poco/DOM/AutoPtr.h"
 #include "Poco/DOM/Document.h"
 
-#include "abb_librws_2_export.h"
+#include "abb_librws_2/abb_librws_2_export.h"
 
 namespace abb
 {
@@ -818,7 +818,12 @@ struct SystemConstants
       /**
        * \brief RAPID symbol data.
        */
-      static const std::string RW_RAPID_SYMBOL;
+      static const std::string RW_RAPID_SYMBOL_DATA_RAPID;
+      
+      /**
+       * \brief RAPID symbol properties.
+       */
+      static const std::string RW_RAPID_SYMBOL_PROPERTIES_RAPID;
 
       /**
        * \brief RAPID tasks.

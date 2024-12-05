@@ -167,7 +167,7 @@ public:
     /**
      * \brief The unit's current coordinate system type.
      */
-    RWSClient::Coordinate coord_system;
+   //  RWSClient::Coordinate coord_system;
   };
 
   /**
@@ -510,26 +510,6 @@ public:
   std::string getIOSignal(const std::string& iosignal);
 
   /**
-   * \brief A method for retrieving static information about a mechanical unit.
-   *
-   * \param mechunit for the mechanical unit's name.
-   * \param static_info for storing the retrieved information.
-   *
-   * \return bool indicating if the communication was successful or not (basic verification for non-empty data is made).
-   */
-  bool getMechanicalUnitStaticInfo(const std::string& mechunit, MechanicalUnitStaticInfo& static_info);
-
-  /**
-   * \brief A method for retrieving dynamic information about a mechanical unit.
-   *
-   * \param mechunit for the mechanical unit's name.
-   * \param dynamic_info for storing the retrieved information.
-   *
-   * \return bool indicating if the communication was successful or not (basic verification for non-empty data is made).
-   */
-  bool getMechanicalUnitDynamicInfo(const std::string& mechunit, MechanicalUnitDynamicInfo& dynamic_info);
-
-  /**
    * \brief A method for retrieving the current jointtarget values of a mechanical unit.
    *
    * \param mechunit for the mechanical unit's name.
@@ -551,10 +531,7 @@ public:
    * \return bool indicating if the communication was successful or not. Note: No checks are made for "correct parsing".
    */
   bool getMechanicalUnitRobTarget(const std::string& mechunit,
-                                  RobTarget* p_robtarget,
-                                  const RWSClient::Coordinate& coordinate = RWSClient::ACTIVE,
-                                  const std::string& tool = "",
-                                  const std::string& wobj = "");
+                                  RobTarget* p_robtarget);
 
   /**
    * \brief A method for retrieving the data of a RAPID symbol in raw text format.
