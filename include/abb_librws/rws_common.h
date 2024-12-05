@@ -888,7 +888,7 @@ public:
   /**
    * \brief A constructor.
    *
-   * \param value for the initial true or false value.
+   * \param initial_value for the initial true or false value.
    */
   TriBool(const bool initial_value) : value(initial_value ? TRUE_VALUE : FALSE_VALUE) {}
 
