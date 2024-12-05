@@ -43,9 +43,9 @@
 
 #include "Poco/DOM/DOMParser.h"
 
-#include "rws_common.h"
-#include "rws_rapid.h"
-#include "rws_poco_client.h"
+#include "abb_librws_2/rws_common.h"
+#include "abb_librws_2/rws_rapid.h"
+#include "abb_librws_2/rws_poco_client.h"
 
 namespace abb
 {

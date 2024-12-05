@@ -34,7 +34,7 @@
  ***********************************************************************************************************************
  */
 
-#include "abb_librws/rws_state_machine_interface.h"
+#include "abb_librws_2/rws_state_machine_interface.h"
 
 namespace abb
 {

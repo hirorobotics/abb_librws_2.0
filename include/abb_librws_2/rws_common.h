@@ -44,7 +44,7 @@
 #include "Poco/DOM/AutoPtr.h"
 #include "Poco/DOM/Document.h"
 
-#include "abb_librws_export.h"
+#include "abb_librws_2_export.h"
 
 namespace abb
 {
@@ -159,7 +159,7 @@ struct SystemConstants
   /**
    * \brief Controller states related constants.
    */
-  struct ABB_LIBRWS_EXPORT ContollerStates
+  struct ABB_LIBRWS_2_EXPORT ContollerStates
   {
     /**
      * \brief Robot controller motor on.
@@ -185,7 +185,7 @@ struct SystemConstants
   /**
    * \brief General constants.
    */
-  struct ABB_LIBRWS_EXPORT General
+  struct ABB_LIBRWS_2_EXPORT General
   {
     /**
      * \brief Default name of an application using RWS.
@@ -276,7 +276,7 @@ struct SystemConstants
   /**
    * \brief IO signal related constants.
    */
-  struct ABB_LIBRWS_EXPORT IOSignals
+  struct ABB_LIBRWS_2_EXPORT IOSignals
   {
     /**
      * \brief Name of defined IO signal for smart gripper left position.
@@ -334,7 +334,7 @@ struct SystemConstants
   /**
    * \brief RAPID related constants.
    */
-  struct ABB_LIBRWS_EXPORT RAPID
+  struct ABB_LIBRWS_2_EXPORT RAPID
   {
     /**
      * \brief RAPID boolean false.
@@ -405,7 +405,7 @@ struct SystemConstants
     /**
      * \brief XML attributes specifying names with corresponding values.
      */
-    struct ABB_LIBRWS_EXPORT XMLAttributes
+    struct ABB_LIBRWS_2_EXPORT XMLAttributes
     {
       /**
        * \brief Class & active type.
@@ -521,7 +521,7 @@ struct SystemConstants
     /**
      * \brief Identifiers in different RWS messages. E.g. XML attribute names/values.
      */
-    struct ABB_LIBRWS_EXPORT Identifiers
+    struct ABB_LIBRWS_2_EXPORT Identifiers
     {
       /**
        * \brief Active type.
@@ -692,7 +692,7 @@ struct SystemConstants
     /**
      * \brief RWS queries.
      */
-    struct ABB_LIBRWS_EXPORT Queries
+    struct ABB_LIBRWS_2_EXPORT Queries
     {
       /**
        * \brief Release action query.
@@ -743,7 +743,7 @@ struct SystemConstants
     /**
      * \brief RWS resources and queries.
      */
-    struct ABB_LIBRWS_EXPORT Resources
+    struct ABB_LIBRWS_2_EXPORT Resources
     {
       /**
        * \brief Instances.
@@ -829,7 +829,7 @@ struct SystemConstants
     /**
      * \brief RWS services.
      */
-    struct ABB_LIBRWS_EXPORT Services
+    struct ABB_LIBRWS_2_EXPORT Services
     {
       /**
        * \brief Controller service.

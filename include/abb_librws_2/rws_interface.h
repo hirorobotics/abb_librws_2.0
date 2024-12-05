@@ -37,8 +37,8 @@
 #ifndef RWS_INTERFACE_H
 #define RWS_INTERFACE_H
 
-#include "rws_cfg.h"
-#include "rws_client.h"
+#include "abb_librws_2/rws_cfg.h"
+#include "abb_librws_2/rws_client.h"
 
 namespace abb
 {
@@ -498,7 +498,7 @@ public:
    *
    * \return std::vector<RobotWareOptionInfo> containing a list of the present RobotWare options.
    */
-  ABB_LIBRWS_DEPRECATED std::vector<RobotWareOptionInfo> getPresentRobotWareOptions();
+  ABB_LIBRWS_2_DEPRECATED std::vector<RobotWareOptionInfo> getPresentRobotWareOptions();
 
   /**
    * \brief A method for retrieving the value if an IO signal.

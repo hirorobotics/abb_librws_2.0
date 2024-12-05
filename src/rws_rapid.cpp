@@ -37,8 +37,8 @@
 #include <sstream>
 #include <string>
 
-#include "abb_librws/rws_common.h"
-#include "abb_librws/rws_rapid.h"
+#include "abb_librws_2/rws_common.h"
+#include "abb_librws_2/rws_rapid.h"
 
 namespace abb
 {

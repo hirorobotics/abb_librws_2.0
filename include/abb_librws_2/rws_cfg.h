@@ -48,7 +48,7 @@
 
 #include <string>
 
-#include "rws_rapid.h"
+#include "abb_librws_2/rws_rapid.h"
 
 namespace abb
 {

@@ -38,8 +38,8 @@
 #include <sstream>
 #include <stdexcept>
 
-#include "abb_librws/rws_interface.h"
-#include "abb_librws/rws_rapid.h"
+#include "abb_librws_2/rws_interface.h"
+#include "abb_librws_2/rws_rapid.h"
 
 namespace
 {

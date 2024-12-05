@@ -40,7 +40,7 @@
 #include "Poco/Net/NetException.h"
 #include "Poco/StreamCopier.h"
 
-#include "abb_librws/rws_poco_client.h"
+#include "abb_librws_2/rws_poco_client.h"
 
 using namespace Poco;
 using namespace Poco::Net;

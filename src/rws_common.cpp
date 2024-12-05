@@ -39,7 +39,7 @@
 #include "Poco/DOM/NodeIterator.h"
 #include "Poco/DOM/NodeList.h"
 
-#include "abb_librws/rws_common.h"
+#include "abb_librws_2/rws_common.h"
 
 namespace abb
 {
