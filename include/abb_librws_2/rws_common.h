@@ -766,6 +766,16 @@ struct SystemConstants
       static const std::string ROBTARGET;
 
       /**
+       * \brief Lead Through.
+       */
+      static const std::string LEADTHROUGH;
+
+      /**
+       * \brief Modules.
+       */
+      static const std::string MODULES;
+
+      /**
        * \brief Configurations.
        */
       static const std::string RW_CFG;
@@ -808,12 +818,7 @@ struct SystemConstants
       /**
        * \brief RAPID symbol data.
        */
-      static const std::string RW_RAPID_SYMBOL_DATA_RAPID;
-
-      /**
-       * \brief RAPID symbol properties.
-       */
-      static const std::string RW_RAPID_SYMBOL_PROPERTIES_RAPID;
+      static const std::string RW_RAPID_SYMBOL;
 
       /**
        * \brief RAPID tasks.
