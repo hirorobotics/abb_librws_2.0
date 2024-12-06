@@ -38,7 +38,7 @@
 #define RWS_POCO_CLIENT_H
 
 #include "Poco/Mutex.h"
-#include "Poco/Net/HTTPClientSession.h"
+#include "Poco/Net/HTTPSClientSession.h"
 #include "Poco/Net/HTTPCredentials.h"
 #include "Poco/Net/HTTPResponse.h"
 #include "Poco/Net/WebSocket.h"
@@ -255,7 +255,7 @@ public:
              const std::string& username,
              const std::string& password)
   :
-  http_client_session_(ip_address, port),
+  http_client_session_(ip_address, port, new Poco::Net::Context(Poco::Net::Context::CLIENT_USE, "", "", "", Poco::Net::Context::VERIFY_NONE)),
   http_credentials_(username, password)
   {
     http_client_session_.setKeepAlive(true);
@@ -459,7 +459,7 @@ private:
   /**
    * \brief A HTTP client session.
    */
-  Poco::Net::HTTPClientSession http_client_session_;
+  Poco::Net::HTTPSClientSession http_client_session_;
 
   /**
    * \brief HTTP credentials for the remote server's access authentication process.
