@@ -534,6 +534,20 @@ class RWSClient : public POCOClient
    RWSResult setSpeedRatio(unsigned int ratio);
 
    /**
+    * \brief A method for turning on the compliance lead through.
+    *
+    * \return RWSResult containing the result.
+    */
+   RWSResult setLeadThroughOn(const std::string mechUnit);
+
+   /**
+    * \brief A method for turning off the compliance lead through.
+    *
+    * \return RWSResult containing the result.
+    */
+   RWSResult setLeadThroughOff(const std::string mechUnit);
+
+   /**
     * \brief A method for retrieving a file from the robot controller.
     *
     * Note: Depending on the file, then the content can be in text or binary format.

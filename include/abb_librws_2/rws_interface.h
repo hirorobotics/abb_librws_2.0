@@ -498,7 +498,7 @@ public:
    *
    * \return std::vector<RobotWareOptionInfo> containing a list of the present RobotWare options.
    */
-  ABB_LIBRWS_2_DEPRECATED std::vector<RobotWareOptionInfo> getPresentRobotWareOptions();
+  std::vector<RobotWareOptionInfo> getPresentRobotWareOptions();
 
   /**
    * \brief A method for retrieving the value if an IO signal.

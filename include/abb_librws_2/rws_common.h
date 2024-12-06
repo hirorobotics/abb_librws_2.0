@@ -44,8 +44,6 @@
 #include "Poco/DOM/AutoPtr.h"
 #include "Poco/DOM/Document.h"
 
-#include "abb_librws_2/abb_librws_2_export.h"
-
 namespace abb
 {
 namespace rws
@@ -159,7 +157,7 @@ struct SystemConstants
   /**
    * \brief Controller states related constants.
    */
-  struct ABB_LIBRWS_2_EXPORT ContollerStates
+  struct ContollerStates
   {
     /**
      * \brief Robot controller motor on.
@@ -185,7 +183,7 @@ struct SystemConstants
   /**
    * \brief General constants.
    */
-  struct ABB_LIBRWS_2_EXPORT General
+  struct General
   {
     /**
      * \brief Default name of an application using RWS.
@@ -276,7 +274,7 @@ struct SystemConstants
   /**
    * \brief IO signal related constants.
    */
-  struct ABB_LIBRWS_2_EXPORT IOSignals
+  struct IOSignals
   {
     /**
      * \brief Name of defined IO signal for smart gripper left position.
@@ -334,7 +332,7 @@ struct SystemConstants
   /**
    * \brief RAPID related constants.
    */
-  struct ABB_LIBRWS_2_EXPORT RAPID
+  struct RAPID
   {
     /**
      * \brief RAPID boolean false.
@@ -405,7 +403,7 @@ struct SystemConstants
     /**
      * \brief XML attributes specifying names with corresponding values.
      */
-    struct ABB_LIBRWS_2_EXPORT XMLAttributes
+    struct  XMLAttributes
     {
       /**
        * \brief Class & active type.
@@ -521,7 +519,7 @@ struct SystemConstants
     /**
      * \brief Identifiers in different RWS messages. E.g. XML attribute names/values.
      */
-    struct ABB_LIBRWS_2_EXPORT Identifiers
+    struct Identifiers
     {
       /**
        * \brief Active type.
@@ -692,7 +690,7 @@ struct SystemConstants
     /**
      * \brief RWS queries.
      */
-    struct ABB_LIBRWS_2_EXPORT Queries
+    struct Queries
     {
       /**
        * \brief Release action query.
@@ -743,7 +741,7 @@ struct SystemConstants
     /**
      * \brief RWS resources and queries.
      */
-    struct ABB_LIBRWS_2_EXPORT Resources
+    struct Resources
     {
       /**
        * \brief Instances.
@@ -796,6 +794,11 @@ struct SystemConstants
       static const std::string RW_MOTIONSYSTEM_MECHUNITS;
 
       /**
+       * \brief Panel state.
+       */
+      static const std::string RW_PANEL;
+
+      /**
        * \brief Panel controller state.
        */
       static const std::string RW_PANEL_CTRLSTATE;
@@ -839,7 +842,7 @@ struct SystemConstants
     /**
      * \brief RWS services.
      */
-    struct ABB_LIBRWS_2_EXPORT Services
+    struct Services
     {
       /**
        * \brief Controller service.
