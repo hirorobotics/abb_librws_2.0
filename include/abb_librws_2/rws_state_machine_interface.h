@@ -73,6 +73,7 @@ public:
     STATE_INITIALIZE,        ///< \brief Initialization state.
     STATE_RUN_RAPID_ROUTINE, ///< \brief Running RAPID routine state.
     STATE_RUN_EGM_ROUTINE,   ///< \brief Running EGM routine state.
+    STATE_FREE_DRIVE_ROUTINE,   ///< \brief Running EGM routine state.
     STATE_UNKNOWN            ///< \brief Unknown state.
   };
 
@@ -83,10 +84,12 @@ public:
    */
   enum EGMActions
   {
-    EGM_ACTION_STOP,      ///< \brief Stop action.
+    EGM_ACTION_UNKNOWN,   ///< \brief Unknown action.
     EGM_ACTION_RUN_JOINT, ///< \brief Joint action.
     EGM_ACTION_RUN_POSE,  ///< \brief Pose action.
-    EGM_ACTION_UNKNOWN    ///< \brief Unknown action.
+    EGM_ACTION_STOP,      ///< \brief Stop action.
+    EGM_ACTION_START_STREAMING, ///< \brief streaming action.
+    EGM_ACTION_STOP_STREAMING  ///< \brief streaming action.
   };
 
   /**
@@ -137,25 +140,24 @@ public:
       static const std::string EGM_START_POSE;
 
       /**
-       * \brief IO signal for requesting start of EGM position streaming (i.e. only feedback).
-       *
-       * Note: Requires that the EGM option exists in the controller system.
-       */
-      static const std::string EGM_START_STREAM;
-
-      /**
        * \brief IO signal for requesting stop of EGM motions.
        *
        * Note: Requires that the EGM option exists in the controller system.
        */
       static const std::string EGM_STOP;
+      /**
+       * \brief IO signal for requesting start of EGM position streaming (i.e. only feedback).
+       *
+       * Note: Requires that the EGM option exists in the controller system.
+       */
+      static const std::string EGM_START_STREAMING;
 
       /**
        * \brief IO signal for requesting stop of EGM position streaming.
        *
        * Note: Requires that the EGM option exists in the controller system.
        */
-      static const std::string EGM_STOP_STREAM;
+      static const std::string EGM_STOP_STREAMING;
 
       /**
        * \brief Prefix for IO signals, used for checking if a mechanical unit is stationary or not.
@@ -362,6 +364,11 @@ public:
          * \brief RAPID symbol containing calibration target extracted during initialization, for a RAPID motion task.
          */
         static const RWSClient::RAPIDSymbolResource UTILITY_CALIBRATION_TARGET;
+
+        /**
+         * \brief RAPID symbol containing current_tool extracted during initialization, for a RAPID motion task.
+         */
+        static const RWSClient::RAPIDSymbolResource UTILITY_CURRENT_TOOL;
 
         /**
          * \brief RAPID symbol indicating if a watchdog is active or not.
@@ -924,25 +931,25 @@ private:
       bool signalEGMStartPose() const;
 
       /**
-       * \brief Signal the StateMachine AddIn to start EGM position streaming.
-       *
-       * \return bool indicating if the signaling was successful or not.
-       */
-      bool signalEGMStartStream() const;
-
-      /**
        * \brief Signal the StateMachine AddIn to stop any current EGM motions.
        *
        * \return bool indicating if the signaling was successful or not.
        */
       bool signalEGMStop() const;
+      
+      /**
+       * \brief Signal the StateMachine AddIn to start EGM position streaming.
+       *
+       * \return bool indicating if the signaling was successful or not.
+       */
+      bool signalEGMStartStreaming() const;
 
       /**
        * \brief Signal the StateMachine AddIn to stop any current position streaming.
        *
        * \return bool indicating if the signaling was successful or not.
        */
-      bool signalEGMStopStream() const;
+      bool signalEGMStopStreaming() const;
 
     private:
       /**
@@ -1043,6 +1050,17 @@ private:
        * \return bool indicating if the communication was successful or not.
        */
       bool runModuleUnload(const std::string& task, const std::string& file_path) const;
+      
+      /**
+       * \brief Request the execution of the predefined RAPID procedure "setCurrentToolData".
+       *
+       * \param task specifying the RAPID task.
+       * \param tool_data specifying tooldata.
+       *
+       * \return bool indicating if the communication was successful or not.
+       */
+
+      bool setCurrentToolData(const std::string task, ToolData tool_data) const;
 
       /**
        * \brief Request the execution of the predefined RAPID procedure "runMoveAbsJ".

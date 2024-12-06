@@ -53,16 +53,16 @@ typedef RWSStateMachineInterface::ResourceIdentifiers::RAPID::Modules    Modules
 typedef RWSStateMachineInterface::ResourceIdentifiers::RAPID::Procedures Procedures;
 typedef RWSStateMachineInterface::ResourceIdentifiers::RAPID::Symbols    Symbols;
 
-const std::string IOSignals::EGM_START_JOINT    = "EGM_START_JOINT";
-const std::string IOSignals::EGM_START_POSE     = "EGM_START_POSE";
-const std::string IOSignals::EGM_START_STREAM   = "EGM_START_STREAM";
-const std::string IOSignals::EGM_STOP           = "EGM_STOP";
-const std::string IOSignals::EGM_STOP_STREAM    = "EGM_STOP_STREAM";
-const std::string IOSignals::OUTPUT_STATIONARY  = "OUTPUT_STATIONARY";
-const std::string IOSignals::RUN_RAPID_ROUTINE  = "RUN_RAPID_ROUTINE";
-const std::string IOSignals::RUN_SG_ROUTINE     = "RUN_SG_ROUTINE";
-const std::string IOSignals::WD_EXTERNAL_STATUS = "WD_EXTERNAL_STATUS";
-const std::string IOSignals::WD_STOP_REQUEST    = "WD_STOP_REQUEST";
+const std::string IOSignals::EGM_START_JOINT     = "EGM_START_JOINT";
+const std::string IOSignals::EGM_START_POSE      = "EGM_START_POSE";
+const std::string IOSignals::EGM_STOP            = "EGM_STOP";
+const std::string IOSignals::EGM_START_STREAMING = "EGM_START_STREAM";
+const std::string IOSignals::EGM_STOP_STREAMING  = "EGM_STOP_STREAM";
+const std::string IOSignals::OUTPUT_STATIONARY   = "OUTPUT_STATIONARY";
+const std::string IOSignals::RUN_RAPID_ROUTINE   = "RUN_RAPID_ROUTINE";
+const std::string IOSignals::RUN_SG_ROUTINE      = "RUN_SG_ROUTINE";
+const std::string IOSignals::WD_EXTERNAL_STATUS  = "WD_EXTERNAL_STATUS";
+const std::string IOSignals::WD_STOP_REQUEST     = "WD_STOP_REQUEST";
 
 const std::string Modules::T_ROB_EGM      = "TRobEGM";
 const std::string Modules::T_ROB_MAIN     = "TRobMain";
@@ -93,6 +93,7 @@ const RAPIDSymbolResource Symbols::SG_SETTINGS(Modules::T_ROB_SG, "settings");
 const RAPIDSymbolResource Symbols::SG_TARGET_POSTION_INPUT(Modules::T_ROB_SG, "target_position_input");
 const RAPIDSymbolResource Symbols::UTILITY_BASE_FRAME(Modules::T_ROB_UTILITY, "base_frame");
 const RAPIDSymbolResource Symbols::UTILITY_CALIBRATION_TARGET(Modules::T_ROB_UTILITY, "calibration_target");
+const RAPIDSymbolResource Symbols::UTILITY_CURRENT_TOOL(Modules::T_ROB_UTILITY, "current_tool");
 const RAPIDSymbolResource Symbols::WATCHDOG_ACTIVE(Modules::T_ROB_WATCHDOG, "active");
 const RAPIDSymbolResource Symbols::WATCHDOG_CHECK_EXTERNAL_STATUS(Modules::T_ROB_WATCHDOG, "check_external_status");
 
@@ -116,9 +117,9 @@ EGMActions RWSStateMachineInterface::Services::EGM::getCurrentAction(const std::
   {
     switch ((int) temp_current_action.value)
     {
-      case EGM_ACTION_STOP:
-        result = EGM_ACTION_STOP;
-      break;
+      case EGM_ACTION_UNKNOWN:
+        result = EGM_ACTION_UNKNOWN;
+        break;
 
       case EGM_ACTION_RUN_JOINT:
         result = EGM_ACTION_RUN_JOINT;
@@ -126,6 +127,18 @@ EGMActions RWSStateMachineInterface::Services::EGM::getCurrentAction(const std::
 
       case EGM_ACTION_RUN_POSE:
         result = EGM_ACTION_RUN_POSE;
+      break;
+
+      case EGM_ACTION_STOP:
+        result = EGM_ACTION_STOP;
+      break;
+
+      case EGM_ACTION_START_STREAMING:
+        result = EGM_ACTION_START_STREAMING;
+      break;
+
+      case EGM_ACTION_STOP_STREAMING:
+        result = EGM_ACTION_STOP_STREAMING;
       break;
 
       default:
@@ -161,23 +174,20 @@ bool RWSStateMachineInterface::Services::EGM::signalEGMStartPose() const
   return p_rws_interface_->toggleIOSignal(IOSignals::EGM_START_POSE);
 }
 
-bool RWSStateMachineInterface::Services::EGM::signalEGMStartStream() const
-{
-  return p_rws_interface_->toggleIOSignal(IOSignals::EGM_START_STREAM);
-}
-
 bool RWSStateMachineInterface::Services::EGM::signalEGMStop() const
 {
   return p_rws_interface_->toggleIOSignal(IOSignals::EGM_STOP);
 }
 
-bool RWSStateMachineInterface::Services::EGM::signalEGMStopStream() const
+bool RWSStateMachineInterface::Services::EGM::signalEGMStartStreaming() const
 {
-  return p_rws_interface_->toggleIOSignal(IOSignals::EGM_STOP_STREAM);
+  return p_rws_interface_->toggleIOSignal(IOSignals::EGM_START_STREAMING);
 }
 
-
-
+bool RWSStateMachineInterface::Services::EGM::signalEGMStopStreaming() const
+{
+  return p_rws_interface_->toggleIOSignal(IOSignals::EGM_STOP_STREAMING);
+}
 
 /***********************************************************************************************************************
  * Class definitions: RWSStateMachineInterface::Services::Main
@@ -227,7 +237,6 @@ States RWSStateMachineInterface::Services::Main::getCurrentState(const std::stri
 
 
 TriBool RWSStateMachineInterface::Services::Main::isStateIdle(const std::string& task) const
-
 {
   TriBool result;
   States temp_current_state = getCurrentState(task);
@@ -253,9 +262,6 @@ TriBool RWSStateMachineInterface::Services::Main::isStationary(const std::string
 
   return result;
 }
-
-
-
 
 /***********************************************************************************************************************
  * Class definitions: RWSStateMachineInterface::Services::RAPID
@@ -292,6 +298,11 @@ bool RWSStateMachineInterface::Services::RAPID::runModuleUnload(const std::strin
          setRoutineName(task, Procedures::RUN_MODULE_UNLOAD) && signalRunRAPIDRoutine();
 }
 
+bool RWSStateMachineInterface::Services::RAPID::setCurrentToolData(const std::string task, ToolData tool_data) const
+{
+  return p_rws_interface_->setRAPIDSymbolData(task, Symbols::UTILITY_CURRENT_TOOL, tool_data);
+}
+
 bool RWSStateMachineInterface::Services::RAPID::runMoveAbsJ(const std::string& task,
                                                             const JointTarget& joint_target) const
 {
@@ -326,9 +337,6 @@ bool RWSStateMachineInterface::Services::RAPID::signalRunRAPIDRoutine() const
 {
   return p_rws_interface_->toggleIOSignal(IOSignals::RUN_RAPID_ROUTINE);
 }
-
-
-
 
 /***********************************************************************************************************************
  * Class definitions: RWSStateMachineInterface::Services::SG
