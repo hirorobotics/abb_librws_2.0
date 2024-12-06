@@ -270,6 +270,18 @@ class RWSClient : public POCOClient
       std::vector<SubscriptionResource> resources_;
    };
 
+   /**
+    * @brief An enumeration of controller coordinate frames.
+    */
+   enum Coordinate
+   {
+      BASE,   ///< @brief Base frame coordinate.
+      WORLD,  ///< @brief World frame coordinate.
+      TOOL,   ///< @brief Tool frame coordinate.
+      WOBJ,   ///< @brief Work object (wobj) frame coordinate.
+      ACTIVE  ///< @brief Currently active coordinate.
+   };
+
    // TODO: understand whether the ptrContext from JOINTLab is actually useful or not
    /**
     * \brief A constructor.
@@ -356,6 +368,24 @@ class RWSClient : public POCOClient
     * \return RWSResult containing the result.
     */
    RWSResult getIOSignal(const std::string& iosignal);
+
+   /**
+    * \brief A method for retrieving static information about a mechanical unit.
+    *
+    * \param mechunit for the mechanical unit's name.
+    *
+    * \return RWSResult containing the result.
+    */
+   RWSResult getMechanicalUnitStaticInfo(const std::string& mechunit);
+
+   /**
+    * \brief A method for retrieving dynamic information about a mechanical unit.
+    *
+    * \param mechunit for the mechanical unit's name.
+    *
+    * \return RWSResult containing the result.
+    */
+   RWSResult getMechanicalUnitDynamicInfo(const std::string& mechunit);
 
    /**
     * \brief A method for retrieving the current jointtarget values of a mechanical unit.

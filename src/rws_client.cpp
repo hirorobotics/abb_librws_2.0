@@ -52,10 +52,10 @@ namespace rws
 {
 using namespace Poco::Net;
 
-typedef SystemConstants::RWS::Identifiers   Identifiers;
-typedef SystemConstants::RWS::Queries       Queries;
-typedef SystemConstants::RWS::Resources     Resources;
-typedef SystemConstants::RWS::Services      Services;
+typedef SystemConstants::RWS::Identifiers Identifiers;
+typedef SystemConstants::RWS::Queries Queries;
+typedef SystemConstants::RWS::Resources Resources;
+typedef SystemConstants::RWS::Services Services;
 typedef SystemConstants::RWS::XMLAttributes XMLAttributes;
 
 /***********************************************************************************************************************
@@ -141,6 +141,28 @@ RWSClient::RWSResult RWSClient::getIOSignals()
 RWSClient::RWSResult RWSClient::getIOSignal(const std::string& iosignal)
 {
    std::string uri = generateIOSignalPath(iosignal);
+
+   EvaluationConditions evaluation_conditions;
+   evaluation_conditions.parse_message_into_xml = true;
+   evaluation_conditions.accepted_outcomes.push_back(HTTPResponse::HTTP_OK);
+
+   return evaluatePOCOResult(httpGet(uri), evaluation_conditions);
+}
+
+RWSClient::RWSResult RWSClient::getMechanicalUnitStaticInfo(const std::string& mechunit)
+{
+   std::string uri = generateMechanicalUnitPath(mechunit) + "?resource=static";
+
+   EvaluationConditions evaluation_conditions;
+   evaluation_conditions.parse_message_into_xml = true;
+   evaluation_conditions.accepted_outcomes.push_back(HTTPResponse::HTTP_OK);
+
+   return evaluatePOCOResult(httpGet(uri), evaluation_conditions);
+}
+
+RWSClient::RWSResult RWSClient::getMechanicalUnitDynamicInfo(const std::string& mechunit)
+{
+   std::string uri = generateMechanicalUnitPath(mechunit) + "?resource=dynamic";
 
    EvaluationConditions evaluation_conditions;
    evaluation_conditions.parse_message_into_xml = true;
@@ -398,26 +420,26 @@ RWSClient::RWSResult RWSClient::setMotorsOff()
 
 RWSClient::RWSResult RWSClient::setLeadThroughOn(const std::string mechUnit)
 {
-  std::string uri = Resources::RW_MOTIONSYSTEM_MECHUNITS + "/" + mechUnit + Resources::LEADTHROUGH;
-  std::string content = "status=active";
+   std::string uri = Resources::RW_MOTIONSYSTEM_MECHUNITS + "/" + mechUnit + Resources::LEADTHROUGH;
+   std::string content = "status=active";
 
-  EvaluationConditions evaluation_conditions;
-  evaluation_conditions.parse_message_into_xml = false;
-  evaluation_conditions.accepted_outcomes.push_back(HTTPResponse::HTTP_NO_CONTENT);
+   EvaluationConditions evaluation_conditions;
+   evaluation_conditions.parse_message_into_xml = false;
+   evaluation_conditions.accepted_outcomes.push_back(HTTPResponse::HTTP_NO_CONTENT);
 
-  return evaluatePOCOResult(httpPost(uri, content), evaluation_conditions);
+   return evaluatePOCOResult(httpPost(uri, content), evaluation_conditions);
 }
 
 RWSClient::RWSResult RWSClient::setLeadThroughOff(const std::string mechUnit)
 {
-  std::string uri = Resources::RW_MOTIONSYSTEM_MECHUNITS + "/" + mechUnit + Resources::LEADTHROUGH;
-  std::string content = "status=inactive";
+   std::string uri = Resources::RW_MOTIONSYSTEM_MECHUNITS + "/" + mechUnit + Resources::LEADTHROUGH;
+   std::string content = "status=inactive";
 
-  EvaluationConditions evaluation_conditions;
-  evaluation_conditions.parse_message_into_xml = false;
-  evaluation_conditions.accepted_outcomes.push_back(HTTPResponse::HTTP_NO_CONTENT);
+   EvaluationConditions evaluation_conditions;
+   evaluation_conditions.parse_message_into_xml = false;
+   evaluation_conditions.accepted_outcomes.push_back(HTTPResponse::HTTP_NO_CONTENT);
 
-  return evaluatePOCOResult(httpPost(uri, content), evaluation_conditions);
+   return evaluatePOCOResult(httpPost(uri, content), evaluation_conditions);
 }
 
 RWSClient::RWSResult RWSClient::setSpeedRatio(unsigned int ratio)
@@ -502,12 +524,7 @@ RWSClient::RWSResult RWSClient::startSubscription(const SubscriptionResources& r
       std::stringstream subscription_content;
       for (std::size_t i = 0; i < temp.size(); ++i)
       {
-         subscription_content << "resources=" << i 
-                              << "&"
-                              << i << "=" << temp.at(i).resource_uri
-                              << "&"
-                              << i << "-p=" << temp.at(i).priority
-                              << (i < temp.size() - 1 ? "&" : "");
+         subscription_content << "resources=" << i << "&" << i << "=" << temp.at(i).resource_uri << "&" << i << "-p=" << temp.at(i).priority << (i < temp.size() - 1 ? "&" : "");
       }
 
       // Make a subscription request.
@@ -528,10 +545,9 @@ RWSClient::RWSResult RWSClient::startSubscription(const SubscriptionResources& r
          evaluation_conditions.parse_message_into_xml = false;
          evaluation_conditions.accepted_outcomes.push_back(HTTPResponse::HTTP_SWITCHING_PROTOCOLS);
          // From ABB doc: client must note that, secure websocket subprotocol protocol should be configured as rws_subscription.
-         result = evaluatePOCOResult(webSocketConnect(poll, "rws_subscription", DEFAULT_SUBSCRIPTION_TIMEOUT),
-                                                      evaluation_conditions);
+         result = evaluatePOCOResult(webSocketConnect(poll, "rws_subscription", DEFAULT_SUBSCRIPTION_TIMEOUT), evaluation_conditions);
 
-         if(!result.success)
+         if (!result.success)
          {
             subscription_group_id_.clear();
          }
@@ -587,15 +603,10 @@ RWSClient::RWSResult RWSClient::logout()
    return evaluatePOCOResult(httpGet(uri), evaluation_conditions);
 }
 
-RWSClient::RWSResult RWSClient::registerLocalUser(const std::string& username,
-                                                  const std::string& application, 
-                                                  const std::string& location)
+RWSClient::RWSResult RWSClient::registerLocalUser(const std::string& username, const std::string& application, const std::string& location)
 {
    std::string uri = Services::USERS;
-   std::string content = "username=" + username +
-                         "&application=" + application +
-                         "&location=" + location +
-                         "&ulocale=" + SystemConstants::General::LOCAL;
+   std::string content = "username=" + username + "&application=" + application + "&location=" + location + "&ulocale=" + SystemConstants::General::LOCAL;
 
    EvaluationConditions evaluation_conditions;
    evaluation_conditions.parse_message_into_xml = false;
@@ -607,15 +618,10 @@ RWSClient::RWSResult RWSClient::registerLocalUser(const std::string& username,
    return result;
 }
 
-RWSClient::RWSResult RWSClient::registerRemoteUser(const std::string& username,
-                                                   const std::string& application,
-                                                   const std::string& location)
+RWSClient::RWSResult RWSClient::registerRemoteUser(const std::string& username, const std::string& application, const std::string& location)
 {
    std::string uri = Services::USERS;
-   std::string content = "username=" + username + 
-                         "&application=" + application + 
-                         "&location=" + location + 
-                         "&ulocale=" + SystemConstants::General::REMOTE;
+   std::string content = "username=" + username + "&application=" + application + "&location=" + location + "&ulocale=" + SystemConstants::General::REMOTE;
 
    EvaluationConditions evaluation_conditions;
    evaluation_conditions.parse_message_into_xml = false;
@@ -653,8 +659,7 @@ RWSClient::RWSResult RWSClient::releaseMasterShip()
  * Auxiliary methods
  */
 
-RWSClient::RWSResult RWSClient::evaluatePOCOResult(const POCOResult& poco_result, 
-                                                   const EvaluationConditions& conditions)
+RWSClient::RWSResult RWSClient::evaluatePOCOResult(const POCOResult& poco_result, const EvaluationConditions& conditions)
 {
    RWSResult result;
 
@@ -674,9 +679,7 @@ RWSClient::RWSResult RWSClient::evaluatePOCOResult(const POCOResult& poco_result
    return result;
 }
 
-void RWSClient::checkAcceptedOutcomes(RWSResult* result, 
-                                      const POCOResult& poco_result, 
-                                      const EvaluationConditions& conditions)
+void RWSClient::checkAcceptedOutcomes(RWSResult* result, const POCOResult& poco_result, const EvaluationConditions& conditions)
 {
    if (result)
    {
