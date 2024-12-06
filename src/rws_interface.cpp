@@ -743,8 +743,11 @@ bool RWSInterface::getMechanicalUnitJointTarget(const std::string& mechunit, Joi
    return result;
 }
 
-bool RWSInterface::getMechanicalUnitRobTarget(const std::string& mechunit, RobTarget* p_robtarget, const RWSClient::Coordinate& coordinate = RWSClient::ACTIVE, const std::string& tool = "",
-                                              const std::string& wobj = "")
+bool RWSInterface::getMechanicalUnitRobTarget(const std::string& mechunit, 
+                                              RobTarget* p_robtarget, 
+                                              const RWSClient::Coordinate& coordinate, 
+                                              const std::string& tool,
+                                              const std::string& wobj)
 {
    bool result = false;
 
