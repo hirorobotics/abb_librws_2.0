@@ -10,9 +10,9 @@
 
 ## Important Notes
 
-> **Note:** This fork tries to address the incompatibilities with the new Omnicore controller and RWS 2.0.
+> **Note:** This fork addresses the incompatibilities with the new Omnicore controller and RWS 2.0 starting from the [original repo](https://github.com/ros-industrial/abb_librws). The repo will not be merged since it introduces breaking changes with the upstream.
 
-RobotWare versions `7.0` and higher are currently incompatible with *abb_librws* (due to RWS `1.0` being replaced by RWS `2.0`). See [this](http://developercenter.robotstudio.com/webservice) for more information about the different RWS versions. Indeed, currently this repo **does not work**.
+RobotWare versions `7.0` and higher are currently compatible with this version of *abb_librws* but not with lower ones (due to RWS `1.0` being replaced by RWS `2.0`). See [this](http://developercenter.robotstudio.com/webservice) for more information about the different RWS versions.
 
 ROS users may use any of the following build tools to build the library:
 
@@ -28,24 +28,20 @@ A C++ library for interfacing with ABB robot controllers supporting *Robot Web S
 
 Please note that this package has not been productized, it is provided "as-is" and only limited support can be expected.
 
-To create a Doxygen HTML documetation:
-
-```bash
-   sudo apt install doxygen
-   cd docs
-   doxygen
-```
-
 ### Requirements
-* RobotWare version `7.0` or higher.
+* RobotWare version `7.0` or **higher**.
 
 ### Dependencies
 
-* [POCO C++ Libraries](https://pocoproject.org) (`>= 1.4.3` due to WebSocket support). [A support script](setup_poco_ppa.sh) is provided to install it.
+* [POCO C++ Libraries](https://pocoproject.org) (`>= 1.4.3` due to WebSocket support). Install it with:
+
+``` bash 
+sudo apt-get install libpoco-dev
+```
 
 ### Limitations
 
-RWS provides access to several services and resources in the robot controller, and this library currently support the following:
+The original version of [abb_librws](https://github.com/ros-industrial/abb_librws) provided the following features. We are try to understand which feature supports this version. Plase, [create an issue](https://github.com/hirorobotics/abb_librws_2.0/issues) if something does not work as intended. 
 
 * Reading/writing of IO-signals.
 * Reading/writing of RAPID data.
@@ -86,6 +82,8 @@ abb_librws_2.0/
 The optional *StateMachine Add-In* for RobotWare can be used in combination with any of the classes above, but it works especially well with the `RWSStateMachineInterface` class.
 
 ### StateMachine Add-In [Optional]
+
+> **Note:** This part has not yet been tested with the current repo. Feedback on this are more than welcome.
 
 The purpose of the RobotWare Add-In is to *ease the setup* of ABB robot controllers. It is made for both *real controllers* and *virtual controllers* (simulated in RobotStudio). If the Add-In is selected during a RobotWare system installation, then the Add-In will load several RAPID modules and system configurations based on the system specifications (e.g. number of robots and present options).
 
