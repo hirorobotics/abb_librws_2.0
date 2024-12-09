@@ -36,7 +36,6 @@
 
 #include <sstream>
 
-#include "Poco/Net/HTTPRequest.h"
 #include "Poco/Net/NetException.h"
 #include "Poco/StreamCopier.h"
 
@@ -226,9 +225,7 @@ POCOClient::POCOResult POCOClient::httpDelete(const std::string& uri)
    return makeHTTPRequest(Poco::Net::HTTPRequest::HTTP_DELETE, uri);
 }
 
-POCOClient::POCOResult POCOClient::makeHTTPRequest(const std::string& method, 
-                                                   const std::string& uri, 
-                                                   const std::string& content)
+POCOClient::POCOResult POCOClient::makeHTTPRequest(const std::string& method, const std::string& uri, const std::string& content)
 {
    // Lock the object's mutex. It is released when the method goes out of scope.
    ScopedLock<Mutex> lock(http_mutex_);
@@ -290,16 +287,19 @@ POCOClient::POCOResult POCOClient::makeHTTPRequest(const std::string& method,
    }
    catch (InvalidArgumentException& e)
    {
+      std::cout << "InvalidArgumentException expeption: " << e.displayText() << std::endl;
       result.status = POCOResult::EXCEPTION_POCO_INVALID_ARGUMENT;
       result.exception_message = e.displayText();
    }
    catch (TimeoutException& e)
    {
+      std::cout << "TimeoutException expeption: " << e.displayText() << std::endl;
       result.status = POCOResult::EXCEPTION_POCO_TIMEOUT;
       result.exception_message = e.displayText();
    }
    catch (NetException& e)
    {
+      std::cout << "Connection expeption: " << e.displayText() << std::endl;
       result.status = POCOResult::EXCEPTION_POCO_NET;
       result.exception_message = e.displayText();
    }

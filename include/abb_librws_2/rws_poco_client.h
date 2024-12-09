@@ -40,9 +40,15 @@
 #include "Poco/Mutex.h"
 #include "Poco/Net/HTTPSClientSession.h"
 #include "Poco/Net/HTTPCredentials.h"
+#include "Poco/Net/HTTPRequest.h"
 #include "Poco/Net/HTTPResponse.h"
 #include "Poco/Net/WebSocket.h"
+#include <Poco/Net/AcceptCertificateHandler.h>
+#include <Poco/Net/SSLManager.h>
 #include "Poco/SharedPtr.h"
+#include <Poco/Base64Encoder.h>
+#include <memory>
+#include <iostream>
 
 namespace abb
 {
@@ -253,13 +259,13 @@ public:
   POCOClient(const std::string& ip_address,
              const Poco::UInt16 port,
              const std::string& username,
-             const std::string& password)
-  :
-  http_client_session_(ip_address, port, new Poco::Net::Context(Poco::Net::Context::CLIENT_USE, "", "", "", Poco::Net::Context::VERIFY_NONE)),
-  http_credentials_(username, password)
+             const std::string& password):
+   http_client_session_(ip_address, port, new Poco::Net::Context(Poco::Net::Context::CLIENT_USE, "", "", "", Poco::Net::Context::VERIFY_NONE)),
+   http_credentials_(username, password)
   {
     http_client_session_.setKeepAlive(true);
     http_client_session_.setTimeout(Poco::Timespan(DEFAULT_HTTP_TIMEOUT));
+
   }
 
   /**
@@ -457,7 +463,7 @@ private:
   Poco::Mutex websocket_use_mutex_;
 
   /**
-   * \brief A HTTP client session.
+   * \brief A HTTPS client session.
    */
   Poco::Net::HTTPSClientSession http_client_session_;
 

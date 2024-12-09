@@ -282,7 +282,6 @@ class RWSClient : public POCOClient
       ACTIVE  ///< @brief Currently active coordinate.
    };
 
-   // TODO: understand whether the ptrContext from JOINTLab is actually useful or not
    /**
     * \brief A constructor.
     *
@@ -293,7 +292,6 @@ class RWSClient : public POCOClient
    {
    }
 
-   // TODO: understand whether the ptrContext from JOINTLab is actually useful or not
    /**
     * \brief A constructor.
     *
@@ -305,7 +303,6 @@ class RWSClient : public POCOClient
    {
    }
 
-   // TODO: understand whether the ptrContext from JOINTLab is actually useful or not
    /**
     * \brief A constructor.
     *

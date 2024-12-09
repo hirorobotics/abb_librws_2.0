@@ -942,14 +942,14 @@ private:
        *
        * \return bool indicating if the signaling was successful or not.
        */
-      bool signalEGMStartStreaming() const;
+      bool signalEGMStartStream() const;
 
       /**
        * \brief Signal the StateMachine AddIn to stop any current position streaming.
        *
        * \return bool indicating if the signaling was successful or not.
        */
-      bool signalEGMStopStreaming() const;
+      bool signalEGMStopStream() const;
 
     private:
       /**
