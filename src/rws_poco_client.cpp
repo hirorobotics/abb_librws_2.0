@@ -226,7 +226,9 @@ POCOClient::POCOResult POCOClient::httpDelete(const std::string& uri)
    return makeHTTPRequest(Poco::Net::HTTPRequest::HTTP_DELETE, uri);
 }
 
-POCOClient::POCOResult POCOClient::makeHTTPRequest(const std::string& method, const std::string& uri, const std::string& content)
+POCOClient::POCOResult POCOClient::makeHTTPRequest(const std::string& method, 
+                                                   const std::string& uri, 
+                                                   const std::string& content)
 {
    // Lock the object's mutex. It is released when the method goes out of scope.
    ScopedLock<Mutex> lock(http_mutex_);
