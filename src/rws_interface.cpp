@@ -44,6 +44,7 @@
 namespace
 {
 static const char EXCEPTION_GET_CFG[]{ "Failed to get configuration instances" };
+static const char EXCEPTION_GET_MECH[]{ "Failed to get mechanical unit instances" };
 static const char EXCEPTION_PARSE_CFG[]{ "Failed to parse configuration instances" };
 }  // namespace
 
@@ -617,12 +618,17 @@ bool RWSInterface::getMechanicalUnitStaticInfo(const std::string& mechunit, Mech
 
    RWSClient::RWSResult rws_result = rws_client_.getMechanicalUnitStaticInfo(mechunit);
 
-   if (rws_result.success)
+   if (!rws_result.success)
+      throw std::runtime_error(EXCEPTION_GET_MECH);
+
+   std::vector<Poco::XML::Node*> instances = xmlFindNodes(rws_result.p_xml_document, XMLAttributes::CLASS_MS_MECHUNIT);
+
+   for (size_t i = 0; i < instances.size(); ++i)
    {
-      static_info.task_name = xmlFindTextContent(rws_result.p_xml_document, XMLAttribute("class", "task-name"));
-      static_info.is_integrated_unit = xmlFindTextContent(rws_result.p_xml_document, XMLAttribute("class", "is-integrated-unit"));
-      static_info.has_integrated_unit = xmlFindTextContent(rws_result.p_xml_document, XMLAttribute("class", "has-integrated-unit"));
-      std::string type = xmlFindTextContent(rws_result.p_xml_document, XMLAttribute("class", "type"));
+      static_info.task_name = xmlFindTextContent(instances[i], XMLAttribute("class", "task-name"));
+      static_info.is_integrated_unit = xmlFindTextContent(instances[i], XMLAttribute("class", "is-integrated-unit"));
+      static_info.has_integrated_unit = xmlFindTextContent(instances[i], XMLAttribute("class", "has-integrated-unit"));
+      std::string type = xmlFindTextContent(instances[i], XMLAttribute("class", "type"));
 
       // Assume mechanical unit type is undefined, update based on contents of 'type'.
       static_info.type = UNDEFINED;
@@ -644,10 +650,10 @@ bool RWSInterface::getMechanicalUnitStaticInfo(const std::string& mechunit, Mech
          static_info.type = SINGLE;
       }
 
-      std::stringstream axes(xmlFindTextContent(rws_result.p_xml_document, XMLAttribute("class", "axes")));
+      std::stringstream axes(xmlFindTextContent(instances[i], XMLAttribute("class", "axes")));
       axes >> static_info.axes;
 
-      std::stringstream axes_total(xmlFindTextContent(rws_result.p_xml_document, XMLAttribute("class", "axes-total")));
+      std::stringstream axes_total(xmlFindTextContent(instances[i], XMLAttribute("class", "axes-total")));
       axes_total >> static_info.axes_total;
 
       // Basic verification.
@@ -917,6 +923,7 @@ RWSInterface::SystemInfo RWSInterface::getSystemInfo()
    {
       result.system_name = xmlFindTextContent(node_list.at(i), XMLAttributes::CLASS_NAME);
       result.robot_ware_version = xmlFindTextContent(node_list.at(i), XMLAttributes::CLASS_RW_VERSION_NAME);
+      result.robot_ware_version += "." + xmlFindTextContent(node_list.at(i), XMLAttributes::CLASS_BUILD);
    }
 
    node_list = xmlFindNodes(rws_result.p_xml_document, XMLAttributes::CLASS_SYS_OPTION_LI);

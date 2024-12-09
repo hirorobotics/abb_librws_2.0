@@ -260,8 +260,9 @@ const std::string SystemConstants::RAPID::TYPE_STRING = "string";
 
 const std::string Identifiers::ACTIVE                         = "active";
 const std::string Identifiers::ARM                            = "arm";
+const std::string Identifiers::BUILD                          = "build";
 const std::string Identifiers::CFG_DT_INSTANCE_LI             = "cfg-dt-instance-li";
-const std::string Identifiers::CFG_IA_T_LI                    = "cfg-ia-t-li";
+const std::string Identifiers::CFG_IA_T_LI                    = "cfg-ia-t";
 const std::string Identifiers::CTRL_TYPE                      = "ctrl-type";
 const std::string Identifiers::CTRLEXECSTATE                  = "ctrlexecstate";
 const std::string Identifiers::CTRLSTATE                      = "ctrlstate";
@@ -274,6 +275,7 @@ const std::string Identifiers::MECHANICAL_UNIT                = "mechanical_unit
 const std::string Identifiers::MECHANICAL_UNIT_GROUP          = "mechanical_unit_group";
 const std::string Identifiers::MOC                            = "moc";
 const std::string Identifiers::MOTIONTASK                     = "motiontask";
+const std::string Identifiers::MS_MECHUNIT                    = "ms-mechunit";
 const std::string Identifiers::NAME                           = "name";
 const std::string Identifiers::OPMODE                         = "opmode";
 const std::string Identifiers::PRESENT_OPTIONS                = "present_options";
@@ -284,8 +286,8 @@ const std::string Identifiers::RW_VERSION_NAME                = "rwversionname";
 const std::string Identifiers::SINGLE                         = "single";
 const std::string Identifiers::STATE                          = "state";
 const std::string Identifiers::SYS                            = "sys";
-const std::string Identifiers::SYS_OPTION_LI                  = "sys-option-li";
-const std::string Identifiers::SYS_SYSTEM_LI                  = "sys-system-li";
+const std::string Identifiers::SYS_OPTION_LI                  = "sys-options-li";
+const std::string Identifiers::SYS_SYSTEM_LI                  = "sys-system";
 const std::string Identifiers::TITLE                          = "title";
 const std::string Identifiers::TYPE                           = "type";
 const std::string Identifiers::VALUE                          = "value";
@@ -326,6 +328,7 @@ const std::string Resources::RW_RAPID_TASKS                   = Services::RW + "
 const std::string Resources::RW_SYSTEM                        = Services::RW + "/system";
 
 const XMLAttribute XMLAttributes::CLASS_ACTIVE(Identifiers::CLASS            , Identifiers::ACTIVE);
+const XMLAttribute XMLAttributes::CLASS_BUILD(Identifiers::CLASS             , Identifiers::BUILD);
 const XMLAttribute XMLAttributes::CLASS_CFG_DT_INSTANCE_LI(Identifiers::CLASS, Identifiers::CFG_DT_INSTANCE_LI);
 const XMLAttribute XMLAttributes::CLASS_CFG_IA_T_LI(Identifiers::CLASS       , Identifiers::CFG_IA_T_LI);
 const XMLAttribute XMLAttributes::CLASS_CTRL_TYPE(Identifiers::CLASS         , Identifiers::CTRL_TYPE);
@@ -335,6 +338,7 @@ const XMLAttribute XMLAttributes::CLASS_DATTYP(Identifiers::CLASS            , I
 const XMLAttribute XMLAttributes::CLASS_EXCSTATE(Identifiers::CLASS          , Identifiers::EXCSTATE);
 const XMLAttribute XMLAttributes::CLASS_IOS_SIGNAL(Identifiers::CLASS        , Identifiers::IOS_SIGNAL);
 const XMLAttribute XMLAttributes::CLASS_LVALUE(Identifiers::CLASS            , Identifiers::LVALUE);
+const XMLAttribute XMLAttributes::CLASS_MS_MECHUNIT(Identifiers::CLASS       , Identifiers::MS_MECHUNIT);
 const XMLAttribute XMLAttributes::CLASS_MOTIONTASK(Identifiers::CLASS        , Identifiers::MOTIONTASK);
 const XMLAttribute XMLAttributes::CLASS_NAME(Identifiers::CLASS              , Identifiers::NAME);
 const XMLAttribute XMLAttributes::CLASS_OPMODE(Identifiers::CLASS            , Identifiers::OPMODE);

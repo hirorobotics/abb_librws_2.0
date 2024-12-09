@@ -411,6 +411,11 @@ struct SystemConstants
       static const XMLAttribute CLASS_ACTIVE;
 
       /**
+       * \brief Class & build.
+       */
+      static const XMLAttribute CLASS_BUILD;
+
+      /**
        * \brief Class & cfg-dt-instance-li.
        */
       static const XMLAttribute CLASS_CFG_DT_INSTANCE_LI;
@@ -454,6 +459,11 @@ struct SystemConstants
        * \brief Class & lvalue.
        */
       static const XMLAttribute CLASS_LVALUE;
+
+      /**
+       * \brief Class & lvalue.
+       */
+      static const XMLAttribute CLASS_MS_MECHUNIT;
 
       /**
        * \brief Class & motiontask.
@@ -532,6 +542,11 @@ struct SystemConstants
       static const std::string ARM;
 
       /**
+       * \brief RobotWare build.
+       */
+      static const std::string BUILD;
+
+      /**
        * \brief XML attribute name: class.
        */
       static const std::string CLASS;
@@ -600,6 +615,11 @@ struct SystemConstants
        * \brief Motion task.
        */
       static const std::string MOTIONTASK;
+
+      /**
+       * \brief ms mechunit.
+       */
+      static const std::string MS_MECHUNIT;
 
       /**
        * \brief Name.
