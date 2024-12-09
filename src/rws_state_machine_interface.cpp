@@ -179,12 +179,12 @@ bool RWSStateMachineInterface::Services::EGM::signalEGMStop() const
   return p_rws_interface_->toggleIOSignal(IOSignals::EGM_STOP);
 }
 
-bool RWSStateMachineInterface::Services::EGM::signalEGMStartStreaming() const
+bool RWSStateMachineInterface::Services::EGM::signalEGMStartStream() const
 {
   return p_rws_interface_->toggleIOSignal(IOSignals::EGM_START_STREAMING);
 }
 
-bool RWSStateMachineInterface::Services::EGM::signalEGMStopStreaming() const
+bool RWSStateMachineInterface::Services::EGM::signalEGMStopStream() const
 {
   return p_rws_interface_->toggleIOSignal(IOSignals::EGM_STOP_STREAMING);
 }
