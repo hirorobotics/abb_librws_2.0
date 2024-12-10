@@ -12,7 +12,9 @@
 
 > **Note:** This fork addresses the incompatibilities with the new Omnicore controller and RWS 2.0 starting from the [original repo](https://github.com/ros-industrial/abb_librws). The repo will not be merged since it introduces breaking changes with the upstream.
 
-RobotWare versions `7.0` and higher are currently compatible with this version of *abb_librws* but not with lower ones (due to RWS `1.0` being replaced by RWS `2.0`). See [this](http://developercenter.robotstudio.com/webservice) for more information about the different RWS versions.
+RobotWare versions `7.0` and higher are currently compatible with this version of *abb_librws*. On the other hand, RobotWare versions strictly lower than `7.0` are not compatible (due to RWS `1.0` being replaced by RWS `2.0`).
+
+See [this](https://developercenter.robotstudio.com/api/rwsApi/) for RWS 1.0 documentation and [this](https://developercenter.robotstudio.com/api/RWS) for RWS 2.0 documentation.
 
 ROS users may use any of the following build tools to build the library:
 
@@ -21,12 +23,10 @@ ROS users may use any of the following build tools to build the library:
 
 ## Overview
 
-A C++ library for interfacing with ABB robot controllers supporting *Robot Web Services* (RWS) `2.0`. 
+This repo is a C++ library for interfacing with ABB robot controllers supporting *Robot Web Services* (RWS) `2.0`. 
+exploited to control the ABB robots with ROS2.
 
-* See [abb_libegm](https://github.com/ros-industrial/abb_libegm) for a companion library that interfaces with *Externally Guided Motion* (EGM).
-* See StateMachine Add-In ([1.0](https://robotapps.robotstudio.com/#/viewApp/7fa7065f-457f-47ce-98d7-c04882e703ee) or [1.1](https://robotapps.robotstudio.com/#/viewApp/c163de01-792e-4892-a290-37dbe050b6e1)) for an optional *RobotWare Add-In* that can be useful when configuring an ABB robot controller for use with this library.
-
-Please note that this package has not been productized, it is provided "as-is" and only limited support can be expected.
+Please note that this package has not been productized, it is provided "as-is" and only limited support can be.
 
 ### Requirements
 * RobotWare version `7.0` or **higher**.
@@ -41,21 +41,33 @@ sudo apt-get install libpoco-dev
 
 ### Limitations
 
-The original version of [abb_librws](https://github.com/ros-industrial/abb_librws) provided the following features. We are try to understand which feature supports this version. Plase, [create an issue](https://github.com/hirorobotics/abb_librws_2.0/issues) if something does not work as intended. 
+The original version of [abb_librws](https://github.com/ros-industrial/abb_librws) provided several features that we are slowly porting in the newer version. Please, [create an issue](https://github.com/hirorobotics/abb_librws_2.0/issues) if something does not work as intended or create a [pull request](https://github.com/hirorobotics/abb_librws_2.0/pulls) if you have fixed/added one:
 
-* Reading/writing of IO-signals.
-* Reading/writing of RAPID data.
-* Reading of RAPID data properties.
-* Starting/stopping/resetting the RAPID program.
-* Subscriptions (i.e. receiving notifications when resources are updated).
-* Uploading/downloading/removing files.
-* Checking controller state (e.g. motors on/off, auto/manual mode and RAPID execution running/stopped).
-* Reading the joint/Cartesian values of a mechanical unit.
-* Register as a local/remote user (e.g. for interaction during manual mode).
-* Turning the motors on/off.
-* Reading of current RobotWare version and available tasks in the robot system.
+* [ ] Reading/writing of IO-signals.
+* [ ] Reading/writing of RAPID data.
+* [ ] Reading of RAPID data properties.
+* [ ] Starting/stopping/resetting the RAPID program.
+* [ ] Subscriptions (i.e. receiving notifications when resources are updated).
+* [ ] Uploading/downloading/removing files.
+* [ ] Checking controller state (e.g. motors on/off, auto/manual mode and RAPID execution running/stopped).
+* [x] Reading the joint/Cartesian values of a mechanical unit.
+* [ ] Register as a local/remote user (e.g. for interaction during manual mode).
+* [ ] Turning the motors on/off.
+* [x] Reading of current RobotWare version and available tasks in the robot system.
 
-## Repo's organisation
+## Important concepts
+
+This section aims to provide a basic understanding of how this repo and RWS (Robot Web Services) in general works with ABB robots.
+
+### Code Stack
+This repo is part of a bigger stack composed of:
+- [abb_libegm](https://github.com/ros-industrial/abb_libegm).It offers the possibility to interact with ABB robots through their real time interface called EGM.
+- abb_egm_rws_managers. It is a wrapper of the current repo and abb_libegm to ease their usage. 
+- abb_ros2. Exploits ann_egm_rws_managers and implements a [ros2_control hardware interface](https://control.ros.org/rolling/doc/ros2_control/hardware_interface/doc/hardware_components_userdoc.html). 
+- abb_ros2_msgs, which are custom ROS2 messages for the ABB controllers.
+- StateMachine Add-In ([1.0](https://robotapps.robotstudio.com/#/viewApp/7fa7065f-457f-47ce-98d7-c04882e703ee) or [1.1](https://robotapps.robotstudio.com/#/viewApp/c163de01-792e-4892-a290-37dbe050b6e1)). An optional *RobotWare Add-In* that can be useful when configuring an ABB robot controller for use with these libraries. See more info at [its section](#statemachine-add-in-optional).
+
+On the other hand, this repo can work also by itself, without the introduced stack.
 
 ### How RWS communicates with the ABB controller 
 
@@ -64,8 +76,6 @@ The following is a conceptual sketch of how this RWS library can be viewed, in r
 ![RWS sketch](docs/images/rws_sketch.png)
 
 ## File content and explanation
-
-This is a generic library, which can be used together with any RAPID program and system configuration. The library's primary classes are:
 
 The following is a tree-like structure of the main files and their content:
 
