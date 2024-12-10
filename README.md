@@ -63,7 +63,7 @@ This section aims to provide a basic understanding of how this repo and RWS (Rob
 This repo is part of a bigger stack composed of:
 - [abb_libegm](https://github.com/ros-industrial/abb_libegm).It offers the possibility to interact with ABB robots through their real time interface called EGM.
 - abb_egm_rws_managers. It is a wrapper of the current repo and abb_libegm to ease their usage. 
-- abb_ros2. Exploits ann_egm_rws_managers and implements a [ros2_control hardware interface](https://control.ros.org/rolling/doc/ros2_control/hardware_interface/doc/hardware_components_userdoc.html). 
+- [abb_omnicore_ros2](https://github.com/hirorobotics/abb_omnicore_ros2). It is a fork from [abb_ros2](https://github.com/PickNikRobotics/abb_ros2) that supports ABB IRC5 controllers only. It exploits abb_egm_rws_managers and implements a [ros2_control hardware interface](https://control.ros.org/rolling/doc/ros2_control/hardware_interface/doc/hardware_components_userdoc.html).
 - abb_ros2_msgs, which are custom ROS2 messages for the ABB controllers.
 - StateMachine Add-In ([1.0](https://robotapps.robotstudio.com/#/viewApp/7fa7065f-457f-47ce-98d7-c04882e703ee) or [1.1](https://robotapps.robotstudio.com/#/viewApp/c163de01-792e-4892-a290-37dbe050b6e1)). An optional *RobotWare Add-In* that can be useful when configuring an ABB robot controller for use with these libraries. See more info at [its section](#statemachine-add-in-optional).
 
@@ -128,7 +128,7 @@ The ROSIN project has received funding from the European Union's Horizon 2020 re
 The opinions expressed reflects only the author's view and reflects in no way the European Commission's opinions.
 The European Commission is not responsible for any use that may be made of the contained information.
 
-Currently, this fork of the repo is mantained by the [Hiro Robotics srl](https://www.hirorobotics.com/):
+Currently, this repo is mantained by the [Hiro Robotics srl](https://www.hirorobotics.com/):
 
 <img src="docs/images/Hiro-Robotics-Logo.png" width="250">
 
